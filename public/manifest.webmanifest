@@ -1,0 +1,23 @@
+{
+  "id": "/",
+  "name": "Talkora — английский шаг за шагом",
+  "short_name": "Talkora",
+  "description": "Изучайте английский, проходите арены и повторяйте свои слова в Talkora.",
+  "lang": "ru",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#184e40",
+  "background_color": "#f8faf7",
+  "categories": ["education"],
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

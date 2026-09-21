@@ -1,0 +1,757 @@
+{
+  "version": 1,
+  "activities": {
+    "hello": {
+      "mode": "lesson",
+      "title": "Давай знакомиться",
+      "arenaId": "first-steps",
+      "answers": {
+        "hello-0-meaning": "привет",
+        "hello-0-listen": "hello",
+        "hello-0-build": "Hello, Anna!",
+        "hello-0-write": "hello",
+        "hello-1-meaning": "имя",
+        "hello-1-listen": "name",
+        "hello-1-build": "My name is Alex.",
+        "hello-1-write": "name",
+        "hello-2-meaning": "друг",
+        "hello-2-listen": "friend",
+        "hello-2-build": "You are my friend.",
+        "hello-2-write": "friend"
+      },
+      "allowedExerciseSets": [
+        [
+          "hello-0-meaning",
+          "hello-0-listen",
+          "hello-0-build",
+          "hello-0-write",
+          "hello-1-meaning",
+          "hello-1-listen"
+        ],
+        [
+          "hello-0-meaning",
+          "hello-0-listen",
+          "hello-0-build",
+          "hello-0-write",
+          "hello-1-meaning",
+          "hello-1-listen",
+          "hello-1-build",
+          "hello-1-write",
+          "hello-2-meaning",
+          "hello-2-listen"
+        ],
+        [
+          "hello-0-meaning",
+          "hello-0-listen",
+          "hello-0-build",
+          "hello-0-write",
+          "hello-1-meaning",
+          "hello-1-listen",
+          "hello-1-build",
+          "hello-1-write",
+          "hello-2-meaning",
+          "hello-2-listen",
+          "hello-2-build",
+          "hello-2-write"
+        ]
+      ]
+    },
+    "family": {
+      "mode": "lesson",
+      "title": "Мои близкие",
+      "arenaId": "first-steps",
+      "answers": {
+        "family-0-meaning": "семья",
+        "family-0-listen": "family",
+        "family-0-build": "I love my family.",
+        "family-0-write": "family",
+        "family-1-meaning": "мама",
+        "family-1-listen": "mother",
+        "family-1-build": "My mother is at home.",
+        "family-1-write": "mother",
+        "family-2-meaning": "брат",
+        "family-2-listen": "brother",
+        "family-2-build": "I have a brother.",
+        "family-2-write": "brother"
+      },
+      "allowedExerciseSets": [
+        [
+          "family-0-meaning",
+          "family-0-listen",
+          "family-0-build",
+          "family-0-write",
+          "family-1-meaning",
+          "family-1-listen"
+        ],
+        [
+          "family-0-meaning",
+          "family-0-listen",
+          "family-0-build",
+          "family-0-write",
+          "family-1-meaning",
+          "family-1-listen",
+          "family-1-build",
+          "family-1-write",
+          "family-2-meaning",
+          "family-2-listen"
+        ],
+        [
+          "family-0-meaning",
+          "family-0-listen",
+          "family-0-build",
+          "family-0-write",
+          "family-1-meaning",
+          "family-1-listen",
+          "family-1-build",
+          "family-1-write",
+          "family-2-meaning",
+          "family-2-listen",
+          "family-2-build",
+          "family-2-write"
+        ]
+      ]
+    },
+    "numbers": {
+      "mode": "lesson",
+      "title": "Раз, два, три",
+      "arenaId": "first-steps",
+      "answers": {
+        "numbers-0-meaning": "один",
+        "numbers-0-listen": "one",
+        "numbers-0-build": "I have one apple.",
+        "numbers-0-write": "one",
+        "numbers-1-meaning": "два",
+        "numbers-1-listen": "two",
+        "numbers-1-build": "I have two books.",
+        "numbers-1-write": "two",
+        "numbers-2-meaning": "три",
+        "numbers-2-listen": "three",
+        "numbers-2-build": "I have three pencils.",
+        "numbers-2-write": "three"
+      },
+      "allowedExerciseSets": [
+        [
+          "numbers-0-meaning",
+          "numbers-0-listen",
+          "numbers-0-build",
+          "numbers-0-write",
+          "numbers-1-meaning",
+          "numbers-1-listen"
+        ],
+        [
+          "numbers-0-meaning",
+          "numbers-0-listen",
+          "numbers-0-build",
+          "numbers-0-write",
+          "numbers-1-meaning",
+          "numbers-1-listen",
+          "numbers-1-build",
+          "numbers-1-write",
+          "numbers-2-meaning",
+          "numbers-2-listen"
+        ],
+        [
+          "numbers-0-meaning",
+          "numbers-0-listen",
+          "numbers-0-build",
+          "numbers-0-write",
+          "numbers-1-meaning",
+          "numbers-1-listen",
+          "numbers-1-build",
+          "numbers-1-write",
+          "numbers-2-meaning",
+          "numbers-2-listen",
+          "numbers-2-build",
+          "numbers-2-write"
+        ]
+      ]
+    },
+    "gate-first-steps": {
+      "mode": "gate",
+      "title": "Мини-тест: Первые слова",
+      "arenaId": "first-steps",
+      "answers": {
+        "hello-0-meaning": "привет",
+        "hello-0-listen": "hello",
+        "family-0-meaning": "семья",
+        "family-0-listen": "family",
+        "numbers-0-meaning": "один",
+        "numbers-0-listen": "one"
+      },
+      "allowedExerciseSets": [
+        [
+          "hello-0-meaning",
+          "hello-0-listen",
+          "family-0-meaning",
+          "family-0-listen",
+          "numbers-0-meaning",
+          "numbers-0-listen"
+        ]
+      ]
+    },
+    "home": {
+      "mode": "lesson",
+      "title": "Дом, милый дом",
+      "arenaId": "everyday",
+      "answers": {
+        "home-0-meaning": "дом",
+        "home-0-listen": "house",
+        "home-0-build": "This house is small.",
+        "home-0-write": "house",
+        "home-1-meaning": "комната",
+        "home-1-listen": "room",
+        "home-1-build": "My room is bright.",
+        "home-1-write": "room",
+        "home-2-meaning": "квартира",
+        "home-2-listen": "flat",
+        "home-2-build": "We live in a flat.",
+        "home-2-write": "flat"
+      },
+      "allowedExerciseSets": [
+        [
+          "home-0-meaning",
+          "home-0-listen",
+          "home-0-build",
+          "home-0-write",
+          "home-1-meaning",
+          "home-1-listen"
+        ],
+        [
+          "home-0-meaning",
+          "home-0-listen",
+          "home-0-build",
+          "home-0-write",
+          "home-1-meaning",
+          "home-1-listen",
+          "home-1-build",
+          "home-1-write",
+          "home-2-meaning",
+          "home-2-listen"
+        ],
+        [
+          "home-0-meaning",
+          "home-0-listen",
+          "home-0-build",
+          "home-0-write",
+          "home-1-meaning",
+          "home-1-listen",
+          "home-1-build",
+          "home-1-write",
+          "home-2-meaning",
+          "home-2-listen",
+          "home-2-build",
+          "home-2-write"
+        ]
+      ]
+    },
+    "food": {
+      "mode": "lesson",
+      "title": "Что на завтрак?",
+      "arenaId": "everyday",
+      "answers": {
+        "food-0-meaning": "вода",
+        "food-0-listen": "water",
+        "food-0-build": "I would like some water.",
+        "food-0-write": "water",
+        "food-1-meaning": "хлеб",
+        "food-1-listen": "bread",
+        "food-1-build": "This bread is fresh.",
+        "food-1-write": "bread",
+        "food-2-meaning": "яблоко",
+        "food-2-listen": "apple",
+        "food-2-build": "The apple is green.",
+        "food-2-write": "apple"
+      },
+      "allowedExerciseSets": [
+        [
+          "food-0-meaning",
+          "food-0-listen",
+          "food-0-build",
+          "food-0-write",
+          "food-1-meaning",
+          "food-1-listen"
+        ],
+        [
+          "food-0-meaning",
+          "food-0-listen",
+          "food-0-build",
+          "food-0-write",
+          "food-1-meaning",
+          "food-1-listen",
+          "food-1-build",
+          "food-1-write",
+          "food-2-meaning",
+          "food-2-listen"
+        ],
+        [
+          "food-0-meaning",
+          "food-0-listen",
+          "food-0-build",
+          "food-0-write",
+          "food-1-meaning",
+          "food-1-listen",
+          "food-1-build",
+          "food-1-write",
+          "food-2-meaning",
+          "food-2-listen",
+          "food-2-build",
+          "food-2-write"
+        ]
+      ]
+    },
+    "shopping": {
+      "mode": "lesson",
+      "title": "За покупками",
+      "arenaId": "everyday",
+      "answers": {
+        "shopping-0-meaning": "магазин",
+        "shopping-0-listen": "shop",
+        "shopping-0-build": "The shop is open.",
+        "shopping-0-write": "shop",
+        "shopping-1-meaning": "цена",
+        "shopping-1-listen": "price",
+        "shopping-1-build": "The price is on the box.",
+        "shopping-1-write": "price",
+        "shopping-2-meaning": "сумка",
+        "shopping-2-listen": "bag",
+        "shopping-2-build": "This is my bag.",
+        "shopping-2-write": "bag"
+      },
+      "allowedExerciseSets": [
+        [
+          "shopping-0-meaning",
+          "shopping-0-listen",
+          "shopping-0-build",
+          "shopping-0-write",
+          "shopping-1-meaning",
+          "shopping-1-listen"
+        ],
+        [
+          "shopping-0-meaning",
+          "shopping-0-listen",
+          "shopping-0-build",
+          "shopping-0-write",
+          "shopping-1-meaning",
+          "shopping-1-listen",
+          "shopping-1-build",
+          "shopping-1-write",
+          "shopping-2-meaning",
+          "shopping-2-listen"
+        ],
+        [
+          "shopping-0-meaning",
+          "shopping-0-listen",
+          "shopping-0-build",
+          "shopping-0-write",
+          "shopping-1-meaning",
+          "shopping-1-listen",
+          "shopping-1-build",
+          "shopping-1-write",
+          "shopping-2-meaning",
+          "shopping-2-listen",
+          "shopping-2-build",
+          "shopping-2-write"
+        ]
+      ]
+    },
+    "gate-everyday": {
+      "mode": "gate",
+      "title": "Мини-тест: Мой маленький мир",
+      "arenaId": "everyday",
+      "answers": {
+        "home-0-meaning": "дом",
+        "home-0-listen": "house",
+        "food-0-meaning": "вода",
+        "food-0-listen": "water",
+        "shopping-0-meaning": "магазин",
+        "shopping-0-listen": "shop"
+      },
+      "allowedExerciseSets": [
+        [
+          "home-0-meaning",
+          "home-0-listen",
+          "food-0-meaning",
+          "food-0-listen",
+          "shopping-0-meaning",
+          "shopping-0-listen"
+        ]
+      ]
+    },
+    "transport": {
+      "mode": "lesson",
+      "title": "Поехали!",
+      "arenaId": "city",
+      "answers": {
+        "transport-0-meaning": "автобус",
+        "transport-0-listen": "bus",
+        "transport-0-build": "The bus is late.",
+        "transport-0-write": "bus",
+        "transport-1-meaning": "поезд",
+        "transport-1-listen": "train",
+        "transport-1-build": "The train is at the station.",
+        "transport-1-write": "train",
+        "transport-2-meaning": "билет",
+        "transport-2-listen": "ticket",
+        "transport-2-build": "I need a ticket.",
+        "transport-2-write": "ticket"
+      },
+      "allowedExerciseSets": [
+        [
+          "transport-0-meaning",
+          "transport-0-listen",
+          "transport-0-build",
+          "transport-0-write",
+          "transport-1-meaning",
+          "transport-1-listen"
+        ],
+        [
+          "transport-0-meaning",
+          "transport-0-listen",
+          "transport-0-build",
+          "transport-0-write",
+          "transport-1-meaning",
+          "transport-1-listen",
+          "transport-1-build",
+          "transport-1-write",
+          "transport-2-meaning",
+          "transport-2-listen"
+        ],
+        [
+          "transport-0-meaning",
+          "transport-0-listen",
+          "transport-0-build",
+          "transport-0-write",
+          "transport-1-meaning",
+          "transport-1-listen",
+          "transport-1-build",
+          "transport-1-write",
+          "transport-2-meaning",
+          "transport-2-listen",
+          "transport-2-build",
+          "transport-2-write"
+        ]
+      ]
+    },
+    "school": {
+      "mode": "lesson",
+      "title": "Учимся вместе",
+      "arenaId": "city",
+      "answers": {
+        "school-0-meaning": "школа",
+        "school-0-listen": "school",
+        "school-0-build": "My school is near the park.",
+        "school-0-write": "school",
+        "school-1-meaning": "книга",
+        "school-1-listen": "book",
+        "school-1-build": "This book is interesting.",
+        "school-1-write": "book",
+        "school-2-meaning": "учитель",
+        "school-2-listen": "teacher",
+        "school-2-build": "Our teacher is kind.",
+        "school-2-write": "teacher"
+      },
+      "allowedExerciseSets": [
+        [
+          "school-0-meaning",
+          "school-0-listen",
+          "school-0-build",
+          "school-0-write",
+          "school-1-meaning",
+          "school-1-listen"
+        ],
+        [
+          "school-0-meaning",
+          "school-0-listen",
+          "school-0-build",
+          "school-0-write",
+          "school-1-meaning",
+          "school-1-listen",
+          "school-1-build",
+          "school-1-write",
+          "school-2-meaning",
+          "school-2-listen"
+        ],
+        [
+          "school-0-meaning",
+          "school-0-listen",
+          "school-0-build",
+          "school-0-write",
+          "school-1-meaning",
+          "school-1-listen",
+          "school-1-build",
+          "school-1-write",
+          "school-2-meaning",
+          "school-2-listen",
+          "school-2-build",
+          "school-2-write"
+        ]
+      ]
+    },
+    "routine": {
+      "mode": "lesson",
+      "title": "Мой день",
+      "arenaId": "city",
+      "answers": {
+        "routine-0-meaning": "обычно",
+        "routine-0-listen": "usually",
+        "routine-0-build": "I usually walk to school.",
+        "routine-0-write": "usually",
+        "routine-1-meaning": "утро",
+        "routine-1-listen": "morning",
+        "routine-1-build": "I read in the morning.",
+        "routine-1-write": "morning",
+        "routine-2-meaning": "парк",
+        "routine-2-listen": "park",
+        "routine-2-build": "We play in the park.",
+        "routine-2-write": "park"
+      },
+      "allowedExerciseSets": [
+        [
+          "routine-0-meaning",
+          "routine-0-listen",
+          "routine-0-build",
+          "routine-0-write",
+          "routine-1-meaning",
+          "routine-1-listen"
+        ],
+        [
+          "routine-0-meaning",
+          "routine-0-listen",
+          "routine-0-build",
+          "routine-0-write",
+          "routine-1-meaning",
+          "routine-1-listen",
+          "routine-1-build",
+          "routine-1-write",
+          "routine-2-meaning",
+          "routine-2-listen"
+        ],
+        [
+          "routine-0-meaning",
+          "routine-0-listen",
+          "routine-0-build",
+          "routine-0-write",
+          "routine-1-meaning",
+          "routine-1-listen",
+          "routine-1-build",
+          "routine-1-write",
+          "routine-2-meaning",
+          "routine-2-listen",
+          "routine-2-build",
+          "routine-2-write"
+        ]
+      ]
+    },
+    "gate-city": {
+      "mode": "gate",
+      "title": "Мини-тест: Город открытий",
+      "arenaId": "city",
+      "answers": {
+        "transport-0-meaning": "автобус",
+        "transport-0-listen": "bus",
+        "school-0-meaning": "школа",
+        "school-0-listen": "school",
+        "routine-0-meaning": "обычно",
+        "routine-0-listen": "usually"
+      },
+      "allowedExerciseSets": [
+        [
+          "transport-0-meaning",
+          "transport-0-listen",
+          "school-0-meaning",
+          "school-0-listen",
+          "routine-0-meaning",
+          "routine-0-listen"
+        ]
+      ]
+    },
+    "airport": {
+      "mode": "lesson",
+      "title": "В аэропорту",
+      "arenaId": "journeys",
+      "answers": {
+        "airport-0-meaning": "аэропорт",
+        "airport-0-listen": "airport",
+        "airport-0-build": "We are at the airport.",
+        "airport-0-write": "airport",
+        "airport-1-meaning": "паспорт",
+        "airport-1-listen": "passport",
+        "airport-1-build": "Here is my passport.",
+        "airport-1-write": "passport",
+        "airport-2-meaning": "багаж",
+        "airport-2-listen": "luggage",
+        "airport-2-build": "My luggage is heavy.",
+        "airport-2-write": "luggage"
+      },
+      "allowedExerciseSets": [
+        [
+          "airport-0-meaning",
+          "airport-0-listen",
+          "airport-0-build",
+          "airport-0-write",
+          "airport-1-meaning",
+          "airport-1-listen"
+        ],
+        [
+          "airport-0-meaning",
+          "airport-0-listen",
+          "airport-0-build",
+          "airport-0-write",
+          "airport-1-meaning",
+          "airport-1-listen",
+          "airport-1-build",
+          "airport-1-write",
+          "airport-2-meaning",
+          "airport-2-listen"
+        ],
+        [
+          "airport-0-meaning",
+          "airport-0-listen",
+          "airport-0-build",
+          "airport-0-write",
+          "airport-1-meaning",
+          "airport-1-listen",
+          "airport-1-build",
+          "airport-1-write",
+          "airport-2-meaning",
+          "airport-2-listen",
+          "airport-2-build",
+          "airport-2-write"
+        ]
+      ]
+    },
+    "hotel": {
+      "mode": "lesson",
+      "title": "Добро пожаловать",
+      "arenaId": "journeys",
+      "answers": {
+        "hotel-0-meaning": "отель",
+        "hotel-0-listen": "hotel",
+        "hotel-0-build": "The hotel is near the station.",
+        "hotel-0-write": "hotel",
+        "hotel-1-meaning": "бронирование",
+        "hotel-1-listen": "reservation",
+        "hotel-1-build": "I have a reservation.",
+        "hotel-1-write": "reservation",
+        "hotel-2-meaning": "ключ",
+        "hotel-2-listen": "key",
+        "hotel-2-build": "Here is your key.",
+        "hotel-2-write": "key"
+      },
+      "allowedExerciseSets": [
+        [
+          "hotel-0-meaning",
+          "hotel-0-listen",
+          "hotel-0-build",
+          "hotel-0-write",
+          "hotel-1-meaning",
+          "hotel-1-listen"
+        ],
+        [
+          "hotel-0-meaning",
+          "hotel-0-listen",
+          "hotel-0-build",
+          "hotel-0-write",
+          "hotel-1-meaning",
+          "hotel-1-listen",
+          "hotel-1-build",
+          "hotel-1-write",
+          "hotel-2-meaning",
+          "hotel-2-listen"
+        ],
+        [
+          "hotel-0-meaning",
+          "hotel-0-listen",
+          "hotel-0-build",
+          "hotel-0-write",
+          "hotel-1-meaning",
+          "hotel-1-listen",
+          "hotel-1-build",
+          "hotel-1-write",
+          "hotel-2-meaning",
+          "hotel-2-listen",
+          "hotel-2-build",
+          "hotel-2-write"
+        ]
+      ]
+    },
+    "past": {
+      "mode": "lesson",
+      "title": "Вчера и сегодня",
+      "arenaId": "journeys",
+      "answers": {
+        "past-0-meaning": "вчера",
+        "past-0-listen": "yesterday",
+        "past-0-build": "I worked yesterday.",
+        "past-0-write": "yesterday",
+        "past-1-meaning": "посетил",
+        "past-1-listen": "visited",
+        "past-1-build": "We visited London.",
+        "past-1-write": "visited",
+        "past-2-meaning": "пошёл",
+        "past-2-listen": "went",
+        "past-2-build": "He went to school.",
+        "past-2-write": "went"
+      },
+      "allowedExerciseSets": [
+        [
+          "past-0-meaning",
+          "past-0-listen",
+          "past-0-build",
+          "past-0-write",
+          "past-1-meaning",
+          "past-1-listen"
+        ],
+        [
+          "past-0-meaning",
+          "past-0-listen",
+          "past-0-build",
+          "past-0-write",
+          "past-1-meaning",
+          "past-1-listen",
+          "past-1-build",
+          "past-1-write",
+          "past-2-meaning",
+          "past-2-listen"
+        ],
+        [
+          "past-0-meaning",
+          "past-0-listen",
+          "past-0-build",
+          "past-0-write",
+          "past-1-meaning",
+          "past-1-listen",
+          "past-1-build",
+          "past-1-write",
+          "past-2-meaning",
+          "past-2-listen",
+          "past-2-build",
+          "past-2-write"
+        ]
+      ]
+    },
+    "gate-journeys": {
+      "mode": "gate",
+      "title": "Мини-тест: Мир становится ближе",
+      "arenaId": "journeys",
+      "answers": {
+        "airport-0-meaning": "аэропорт",
+        "airport-0-listen": "airport",
+        "hotel-0-meaning": "отель",
+        "hotel-0-listen": "hotel",
+        "past-0-meaning": "вчера",
+        "past-0-listen": "yesterday"
+      },
+      "allowedExerciseSets": [
+        [
+          "airport-0-meaning",
+          "airport-0-listen",
+          "hotel-0-meaning",
+          "hotel-0-listen",
+          "past-0-meaning",
+          "past-0-listen"
+        ]
+      ]
+    }
+  }
+}

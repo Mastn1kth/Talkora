@@ -1,0 +1,16 @@
+node_modules/
+dist/
+data/
+.env
+.env.*
+!.env.example
+output/
+*.tsbuildinfo
+android/.gradle/
+android/local.properties
+android/app/build/
+android/build/
+.playwright-cli/
+public/ocr/
+android/app/src/main/assets/public/
+android/app/src/main/assets/capacitor.config.json

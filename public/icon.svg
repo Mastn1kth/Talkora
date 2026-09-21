@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Talkora</title>
+  <desc id="desc">Знак Talkora: светлое облако речи с листом на зелёном фоне.</desc>
+  <rect width="512" height="512" rx="112" fill="#184e40"/>
+  <path d="M143 170c0-25 20-45 45-45h136c25 0 45 20 45 45v113c0 25-20 45-45 45h-73l-66 48v-48c-24-2-42-21-42-45Z" fill="#f8faf7"/>
+  <path d="M230 251c-32-58 10-86 72-88 2 57-16 91-72 88Z" fill="#a8db84"/>
+  <path d="m212 279 65-81" fill="none" stroke="#184e40" stroke-width="15" stroke-linecap="round"/>
+</svg>
