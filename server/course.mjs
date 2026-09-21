@@ -46,3 +46,16 @@ export function verifyCourseEvent(previousState, event) {
 export function isPublishedActivity(id) {
   return Boolean(catalog.activities[id] || Object.keys(catalog.activities).some(contentId => `${contentId}-practice` === id));
 }
+
+export function curatedTopicMaterial(topicId, profile, minutes) {
+  const topic = catalog.topics?.[topicId];
+  if (!topic || ![5, 10, 15].includes(minutes)) return null;
+  const audience = /^(0.?14|child|kids|children|under.?15)$/i.test(String(profile.age).trim()) ? 'child' : 'general';
+  const difficulty = /^(A0|A1|beginner|начинающий)$/i.test(String(profile.level)) ? 'beginner' : 'extended';
+  const variant = topic[`${audience}-${difficulty}`];
+  if (!variant) return null;
+  const durationIndex = minutes === 5 ? 0 : minutes === 10 ? 1 : 2;
+  const ids = variant.allowedExerciseSets[durationIndex];
+  return { title: variant.title, description: variant.description, words: variant.words,
+    exercises: ids.map(id => structuredClone(variant.exercises[id])) };
+}

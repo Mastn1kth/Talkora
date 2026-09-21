@@ -63,18 +63,27 @@ export function createPractice(database, now = () => new Date()) {
     CREATE INDEX IF NOT EXISTS practice_sessions_user ON practice_sessions(user_id, created_at);
   `);
 
-  function createWords(userId, words, minutes) {
+  function save(userId, kind, title, exercises, extra = {}) {
     const id = randomUUID();
-    const activityId = `words-${id}`;
-    const title = 'Твои слова в деле';
-    const exercises = selectMixed(exercisePool(id, words), minutes);
+    const activityId = `${kind}-${id}`;
     const created = now();
     database.prepare(`INSERT INTO practice_sessions(id, user_id, kind, activity_id, title, exercises, created_at, expires_at)
-      VALUES (?, ?, 'words', ?, ?, ?, ?, ?)`).run(id, userId, activityId, title, JSON.stringify(exercises), created.toISOString(), created.getTime() + SESSION_DAYS * 86_400_000);
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`).run(id, userId, kind, activityId, title, JSON.stringify(exercises), created.toISOString(), created.getTime() + SESSION_DAYS * 86_400_000);
     database.prepare('DELETE FROM practice_sessions WHERE expires_at < ?').run(created.getTime());
     database.prepare(`DELETE FROM practice_sessions WHERE user_id = ? AND id NOT IN
       (SELECT id FROM practice_sessions WHERE user_id = ? ORDER BY created_at DESC LIMIT 100)`).run(userId, userId);
-    return { sessionId: id, activityId, title, exercises };
+    return { sessionId: id, activityId, title, exercises, ...extra };
+  }
+
+  function createWords(userId, words, minutes) {
+    const id = randomUUID();
+    const exercises = selectMixed(exercisePool(id, words), minutes);
+    // Exercise ids may use a different nonce; the session id remains the only proof handle.
+    return save(userId, 'words', 'Твои слова в деле', exercises);
+  }
+
+  function createTopic(userId, material) {
+    return save(userId, 'topic', material.title, material.exercises, { description: material.description, words: material.words });
   }
 
   function verifyEvent(userId, previousState, event) {
@@ -104,5 +113,5 @@ export function createPractice(database, now = () => new Date()) {
     return { handled: true, verified: true, activityId: row.activity_id, practiceKind: row.kind };
   }
 
-  return { createWords, verifyEvent };
+  return { createWords, createTopic, verifyEvent };
 }

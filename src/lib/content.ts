@@ -193,27 +193,39 @@ const sayTellExercises: Exercise[] = [
   { id: 'say-truth', type: 'input', prompt: 'Выберите say или tell: Always ___ the truth.', answer: 'tell', hint: '«Говорить правду» — устойчивое сочетание с tell.', explanation: 'Tell the truth — говорить правду. Это сочетание учим целиком.' },
 ];
 
-export interface TopicTraining { title: string; description: string; exercises: Exercise[]; words: DictionaryWord[]; source: 'curated' }
+export type CuratedTopicId = 'airport' | 'hotel' | 'interview' | 'past-simple' | 'say-tell' | 'programming';
+export interface TopicTraining { id: CuratedTopicId; title: string; description: string; exercises: Exercise[]; words: DictionaryWord[]; source: 'curated' }
+
+export function getCuratedTopicId(topic: string): CuratedTopicId | null {
+  const normalized = topic.toLocaleLowerCase('ru-RU').trim();
+  if (/аэропорт|airport|багаж|boarding/.test(normalized)) return 'airport';
+  if (/отел|гостиниц|hotel/.test(normalized)) return 'hotel';
+  if (/собеседован|interview/.test(normalized)) return 'interview';
+  if (/past\s+simple|прошедш.*врем/.test(normalized)) return 'past-simple';
+  if (/\bsay\b.*\btell\b|\btell\b.*\bsay\b/.test(normalized)) return 'say-tell';
+  if (/программист|программирован|programming|developer/.test(normalized)) return 'programming';
+  return null;
+}
 
 export function getTopicTraining(topic: string, profile: { age: string; level: string; goals: string[] }): TopicTraining | null {
-  const normalized = topic.toLocaleLowerCase('ru-RU').trim();
+  const id = getCuratedTopicId(topic);
+  if (!id) return null;
   const child = /^(0.?14|child|kids|children|under.?15)$/i.test(profile.age.trim());
   let title: string, selected: string[], exercises: Exercise[] | undefined;
-  if (/аэропорт|airport|багаж|boarding/.test(normalized)) { title = 'Английский в аэропорту'; selected = ['airport', 'passport', 'boarding pass', 'luggage', 'gate', 'flight']; }
-  else if (/отел|гостиниц|hotel/.test(normalized)) { title = 'Разговор в отеле'; selected = ['hotel', 'reservation', 'key', 'room', 'breakfast']; }
-  else if (/собеседован|interview/.test(normalized)) {
+  if (id === 'airport') { title = 'Английский в аэропорту'; selected = ['airport', 'passport', 'boarding pass', 'luggage', 'gate', 'flight']; }
+  else if (id === 'hotel') { title = 'Разговор в отеле'; selected = ['hotel', 'reservation', 'key', 'room', 'breakfast']; }
+  else if (id === 'interview') {
     title = child ? 'Рассказываем о себе в школе' : 'Первое собеседование';
     selected = child ? ['name', 'school', 'friend', 'book', 'teacher'] : ['interview', 'experience', 'team', 'skill'];
-  } else if (/past\s+simple|прошедш.*врем/.test(normalized)) { title = 'Past Simple: вчера и раньше'; selected = ['yesterday', 'visited', 'went']; exercises = pastExercises; }
-  else if (/\bsay\b.*\btell\b|\btell\b.*\bsay\b/.test(normalized)) { title = 'Say или tell?'; selected = ['say', 'tell', 'message']; exercises = sayTellExercises; }
-  else if (/программист|программирован|programming|developer/.test(normalized)) { title = child ? 'Первые слова о компьютере' : 'Английский для программиста'; selected = ['code', 'bug', 'file', 'save']; }
-  else return null;
+  } else if (id === 'past-simple') { title = 'Past Simple: вчера и раньше'; selected = ['yesterday', 'visited', 'went']; exercises = pastExercises; }
+  else if (id === 'say-tell') { title = 'Say или tell?'; selected = ['say', 'tell', 'message']; exercises = sayTellExercises; }
+  else { title = child ? 'Первые слова о компьютере' : 'Английский для программиста'; selected = ['code', 'bug', 'file', 'save']; }
   const words = selected.map(word);
   const allExercises = exercises ?? vocabularyExercises(`topic-${words[0].id}`, words);
   const isBeginner = /^(A0|A1|beginner|начинающий)$/i.test(profile.level);
   // A finite beginner/extended selection, not an AI proficiency assessment.
   const chosen = isBeginner && exercises ? allExercises.slice(0, 6) : allExercises;
-  return { title, words, exercises: chosen.map(exercise => ({ ...exercise, options: exercise.options ? [...exercise.options] : undefined })), source: 'curated',
+  return { id, title, words, exercises: chosen.map(exercise => ({ ...exercise, options: exercise.options ? [...exercise.options] : undefined })), source: 'curated',
     description: `${child ? 'Безопасные повседневные примеры. ' : ''}${isBeginner ? 'Начнём с коротких фраз и понятных подсказок. ' : 'Закрепим лексику, порядок слов и понимание на слух. '}Готовый авторский набор; генерация ИИ пока не подключена.` };
 }
 

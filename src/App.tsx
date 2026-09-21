@@ -10,7 +10,7 @@ import { WordsScreen, TopicsScreen, KnowledgeScreen, ProfileScreen, SettingsScre
 import { LeagueProfileCard, LeagueScreen } from './screens/LeagueScreen';
 import { StreakRestoreCard } from './screens/StreakRestoreCard';
 import { visibleStreak } from './lib/streak';
-export type LessonSession={id:string;title:string;exercises:Exercise[];mode?:'lesson'|'placement'|'gate'|'words'|'topic';arenaId?:string;words?:{id:string;english:string;russian:string}[];proofSessionId?:string};
+export type LessonSession={id:string;title:string;exercises:Exercise[];mode?:'lesson'|'placement'|'gate'|'words'|'topic';arenaId?:string;words?:{id:string;english:string;russian:string}[];proofSessionId?:string;topicId?:string};
 export default function App(){
  const store=useStore();const {state,user,online,syncStatus}=store;const [route,setRoute]=useState(location.hash.slice(1)||'learn');const [mobileMenu,setMobileMenu]=useState(false);const [auth,setAuth]=useState(false);const [modal,setModal]=useState('');const [toast,setToast]=useState('');const [session,setSession]=useState<LessonSession|null>(null);const [duration,setDuration]=useState(5);const [pending,setPending]=useState<LessonSession|null>(null);const [launching,setLaunching]=useState(false);const [selectedArena,setSelectedArena]=useState(0);
  const en=state.profile.locale==='en';const t=(ru:string,english:string)=>en?english:ru;const shownStreak=visibleStreak(state.progress,today());
@@ -31,6 +31,12 @@ export default function App(){
     const result=await api('/practice/words',{method:'POST',body:JSON.stringify({userId:user?.id,minutes:duration,words:pending.words.map(({id,english,russian})=>({id,english,russian}))})});
     next={...pending,id:result.activityId,title:result.title,exercises:result.exercises,proofSessionId:result.sessionId};
    }catch(error:any){notify(`Серверная проверка сейчас недоступна: ${error.message} Результат сохраним без очков лиги.`);}
+  }
+  if(pending.mode==='topic'&&online&&pending.topicId){
+   try{
+    const result=await api('/practice/topic',{method:'POST',body:JSON.stringify({userId:user?.id,minutes:duration,topicId:pending.topicId})});
+    next={...pending,id:result.activityId,title:result.title,exercises:result.exercises,words:result.words,proofSessionId:result.sessionId};
+   }catch(error:any){notify(`Серверная проверка темы сейчас недоступна: ${error.message} Результат сохраним без очков лиги.`);}
   }
   setSession(next);setModal('');setLaunching(false);
  }

@@ -295,6 +295,46 @@ test('personal-word sessions are account-bound, checked by the server, and count
   assert.equal((await app.request('/api/state', { method: 'PUT', cookie: learner.cookie, body: { state: tampered, version: 1 } })).status, 400);
 });
 
+test('curated topic sessions use the saved age and level, reject client changes, and count in the league', async (t) => {
+  const app = await fixture(t, { leagueNow: () => new Date('2026-09-21T12:00:00.000Z') });
+  const learner = await app.register('topiclearner');
+  const profile = structuredClone(learner.data.state);
+  profile.profile.age = '0-14';
+  profile.profile.level = 'A1';
+  profile.profile.onboarded = true;
+  const profiled = await app.request('/api/state', { method: 'PUT', cookie: learner.cookie, body: { state: profile, version: 0 } });
+  assert.equal(profiled.status, 200);
+
+  assert.equal((await app.request('/api/practice/topic', { method: 'POST', cookie: learner.cookie,
+    body: { topicId: 'unknown-topic', minutes: 5, userId: learner.data.user.id } })).status, 400);
+  const prepared = await app.request('/api/practice/topic', { method: 'POST', cookie: learner.cookie,
+    body: { topicId: 'interview', minutes: 15, userId: learner.data.user.id } });
+  assert.equal(prepared.status, 201);
+  assert.equal(prepared.data.title, 'Рассказываем о себе в школе');
+  assert.equal(prepared.data.exercises.length, 14);
+  assert.equal(prepared.data.words.some((word) => word.english === 'school'), true);
+  assert.equal(prepared.data.words.some((word) => word.english === 'interview'), false);
+
+  const completed = award(structuredClone(profiled.data.state), 'checked-topic', 30, '2026-09-21');
+  Object.assign(completed.history.at(-1), {
+    title: prepared.data.title,
+    accuracy: 100,
+    proof: {
+      sessionId: prepared.data.sessionId,
+      activityId: prepared.data.activityId,
+      responses: prepared.data.exercises.map((exercise) => ({ exerciseId: exercise.id, answer: exercise.answer })),
+    },
+  });
+  completed.progress.completedLessons.push(prepared.data.activityId);
+  const changed = structuredClone(completed);
+  changed.history.at(-1).title = 'Подменённая тема';
+  assert.equal((await app.request('/api/state', { method: 'PUT', cookie: learner.cookie, body: { state: changed, version: 1 } })).status, 400);
+  const saved = await app.request('/api/state', { method: 'PUT', cookie: learner.cookie, body: { state: completed, version: 1 } });
+  assert.equal(saved.status, 200);
+  const league = await app.request('/api/league', { cookie: learner.cookie });
+  assert.equal(league.data.rows.find((row) => row.self).xp, 30);
+});
+
 test('streak recovery is free once, then spends twenty crystals exactly once', async (t) => {
   let current = new Date('2026-09-20T12:00:00.000Z');
   const app = await fixture(t, { streakNow: () => current });

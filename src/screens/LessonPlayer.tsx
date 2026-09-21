@@ -28,7 +28,7 @@ export function LessonPlayer({session,duration,onClose,notify}:{session:LessonSe
         const studied=new Set(exercises.map(item=>item.word?.toLowerCase()).filter(Boolean));
         const newWords=session.words?.filter(word=>studied.has(word.english.toLowerCase())).map(word=>({...word,known:false,nextReview:today(),interval:1}));
         const responses=exercises.map(item=>({exerciseId:item.id,answer:firstAnswers.current[item.id]||''}));
-        const proof=session.mode==='lesson'||session.mode==='gate'?{contentId:session.id,activityId:entryId,responses}:session.mode==='words'&&session.proofSessionId?{sessionId:session.proofSessionId,activityId:entryId,responses}:undefined;
+        const proof=session.mode==='lesson'||session.mode==='gate'?{contentId:session.id,activityId:entryId,responses}:(session.mode==='words'||session.mode==='topic')&&session.proofSessionId?{sessionId:session.proofSessionId,activityId:entryId,responses}:undefined;
         completeLesson(entryId,session.title,Math.round(ratio*100),points,newWords,proof);
         if(isGate&&ratio>=.75)update(s=>({...s,progress:{...s.progress,passedArenas:[...new Set([...s.progress.passedArenas,session.arenaId!])]}}));
         if(session.mode==='words'){

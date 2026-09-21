@@ -7,7 +7,7 @@ import { dirname, extname, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { studyLedgerError } from './ledger.mjs';
 import { createLeague } from './league.mjs';
-import { verifyCourseEvent, isPublishedActivity } from './course.mjs';
+import { verifyCourseEvent, isPublishedActivity, curatedTopicMaterial } from './course.mjs';
 import { createPractice } from './practice.mjs';
 
 const deriveKey = promisify(scrypt);
@@ -362,6 +362,15 @@ export function createServer({ dbPath = process.env.DB_PATH || resolve(ROOT, 'da
       });
       requireValue(new Set(words.map(word => word.id)).size === words.length, 'В тренировке есть повторяющиеся слова.');
       return json(response, 201, practice.createWords(user.id, words, body.minutes));
+    }
+    if (method === 'POST' && pathname === '/api/practice/topic') {
+      const body = await readJson(request);
+      const user = requireActor(request, body);
+      requireValue([5, 10, 15].includes(body.minutes), 'Выберите длительность 5, 10 или 15 минут.');
+      const topicId = textField(body.topicId, 'Тема', 1, 80);
+      const material = curatedTopicMaterial(topicId, snapshot(user.id).state.profile, body.minutes);
+      requireValue(material, 'Для этой темы пока нет опубликованной тренировки.');
+      return json(response, 201, practice.createTopic(user.id, material));
     }
     if (method === 'PUT' && pathname === '/api/state') {
       const body = await readJson(request);
