@@ -752,6 +752,33 @@
           "past-0-listen"
         ]
       ]
+    },
+    "placement": {
+      "mode": "placement",
+      "title": "Твоя отправная точка",
+      "arenaId": "first-steps",
+      "answers": {
+        "hello-0-meaning": "привет",
+        "family-0-meaning": "семья",
+        "home-0-meaning": "дом",
+        "food-0-meaning": "вода",
+        "transport-0-meaning": "автобус",
+        "school-0-meaning": "школа",
+        "airport-0-meaning": "аэропорт",
+        "hotel-0-meaning": "отель"
+      },
+      "allowedExerciseSets": [
+        [
+          "hello-0-meaning",
+          "family-0-meaning",
+          "home-0-meaning",
+          "food-0-meaning",
+          "transport-0-meaning",
+          "school-0-meaning",
+          "airport-0-meaning",
+          "hotel-0-meaning"
+        ]
+      ]
     }
   },
   "topics": {

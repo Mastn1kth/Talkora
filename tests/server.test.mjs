@@ -335,6 +335,43 @@ test('curated topic sessions use the saved age and level, reject client changes,
   assert.equal(league.data.rows.find((row) => row.self).xp, 30);
 });
 
+test('placement answers are checked by the server and a repeated test never lowers progress', async (t) => {
+  const app = await fixture(t);
+  const learner = await app.register('placementlearner');
+  const forged = structuredClone(learner.data.state);
+  forged.progress.placementArena = 3;
+  forged.profile.level = 'A2';
+  assert.equal((await app.request('/api/state', { method: 'PUT', cookie: learner.cookie, body: { state: forged, version: 0 } })).status, 400);
+
+  const activity = course.activities.placement;
+  const exerciseIds = activity.allowedExerciseSets[0];
+  const passed = structuredClone(learner.data.state);
+  passed.progress.placementArena = 3;
+  passed.profile.level = 'A2';
+  passed.history.push({
+    id: 'placement-high', date: '2026-09-21T12:00:00.000Z', title: activity.title, xp: 0, coins: 0, accuracy: 100,
+    proof: { contentId: 'placement', activityId: 'placement', responses: exerciseIds.map(exerciseId => ({ exerciseId, answer: activity.answers[exerciseId] })) },
+  });
+  const saved = await app.request('/api/state', { method: 'PUT', cookie: learner.cookie, body: { state: passed, version: 0 } });
+  assert.equal(saved.status, 200);
+  assert.equal(saved.data.state.progress.placementArena, 3);
+  assert.equal(saved.data.state.profile.level, 'A2');
+
+  const repeated = structuredClone(saved.data.state);
+  repeated.history.push({
+    id: 'placement-low', date: '2026-09-21T12:01:00.000Z', title: activity.title, xp: 0, coins: 0, accuracy: 0,
+    proof: { contentId: 'placement', activityId: 'placement', responses: exerciseIds.map(exerciseId => ({ exerciseId, answer: '__wrong__' })) },
+  });
+  const kept = await app.request('/api/state', { method: 'PUT', cookie: learner.cookie, body: { state: repeated, version: 1 } });
+  assert.equal(kept.status, 200);
+  assert.equal(kept.data.state.progress.placementArena, 3);
+  assert.equal(kept.data.state.profile.level, 'A2');
+
+  const inventedLevel = structuredClone(kept.data.state);
+  inventedLevel.profile.level = 'C2';
+  assert.equal((await app.request('/api/state', { method: 'PUT', cookie: learner.cookie, body: { state: inventedLevel, version: 2 } })).status, 400);
+});
+
 test('streak recovery is free once, then spends twenty crystals exactly once', async (t) => {
   let current = new Date('2026-09-20T12:00:00.000Z');
   const app = await fixture(t, { streakNow: () => current });

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { arenas, createWordTraining, dictionary, getTopicTraining, grammarArticles } from '../src/lib/content.ts';
-import { exercisesForDuration, isCorrect, isReviewDue, markWordKnown, normalizeAnswer, scheduleReview } from '../src/lib/learning.ts';
+import { exercisesForDuration, isCorrect, isReviewDue, markWordKnown, normalizeAnswer, placementArenaForScore, scheduleReview } from '../src/lib/learning.ts';
 import { parseWordText, WordImportError } from '../src/lib/import.ts';
 import { restorePrice, streakAfterLesson, streakStatus, visibleStreak } from '../src/lib/streak.ts';
 
@@ -41,6 +41,14 @@ test('lesson duration selects a mixed, bounded set and leaves the original intac
   }
   assert.equal(JSON.stringify(source), original);
   assert.deepEqual(exercisesForDuration([], 5), []);
+});
+
+test('placement score maps monotonically from the first arena to the A2 arena', () => {
+  assert.equal(placementArenaForScore(0, 8), 0);
+  assert.equal(placementArenaForScore(4, 8), 1);
+  assert.equal(placementArenaForScore(6, 8), 2);
+  assert.equal(placementArenaForScore(7, 8), 3);
+  assert.equal(placementArenaForScore(8, 8), 3);
 });
 
 test('an error returns a manually known word to immediate repetition', () => {

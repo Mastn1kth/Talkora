@@ -16,6 +16,7 @@ export function studyLedgerError(previous, next, { allowRestore = false, verifyE
   const studies = [];
   const verifiedActivities = new Set();
   const verifiedGateArenas = new Set();
+  let verifiedPlacement = null;
   const completedForVerification = new Set(previous.progress.completedLessons);
   for (const event of next.history) {
     if (!event || typeof event.id !== 'string' || event.id.length < 1 || event.id.length > 100 || seen.has(event.id)) return 'В истории занятий есть повторяющиеся или неверные события.';
@@ -50,6 +51,9 @@ export function studyLedgerError(previous, next, { allowRestore = false, verifyE
       verifiedActivities.add(verification.activityId);
       completedForVerification.add(verification.activityId);
       if (verification.passedGate) verifiedGateArenas.add(verification.arenaId);
+      if (Number.isInteger(verification.placementArena) && (!verifiedPlacement || verification.placementArena > verifiedPlacement.arena)) {
+        verifiedPlacement = { arena: verification.placementArena, level: verification.placementLevel };
+      }
     }
     addedXp += event.xp;
     addedCoins += event.coins;
@@ -65,6 +69,15 @@ export function studyLedgerError(previous, next, { allowRestore = false, verifyE
   if (nextArenas.size !== next.progress.passedArenas.length) return 'Список пройденных арен содержит повторы.';
   for (const id of oldArenas) if (!nextArenas.has(id)) return 'Пройденные арены нельзя удалить.';
   for (const id of nextArenas) if (!oldArenas.has(id) && !verifiedGateArenas.has(id)) return 'Арену открывает только успешно проверенный мини-тест.';
+  if (next.progress.placementArena < previous.progress.placementArena) return 'Стартовый тест не может закрыть уже доступные арены.';
+  if (next.progress.placementArena !== previous.progress.placementArena) {
+    const expectedArena = Math.max(previous.progress.placementArena, verifiedPlacement?.arena ?? -1);
+    if (next.progress.placementArena !== expectedArena) return 'Стартовую арену можно изменить только проверенным тестом.';
+  }
+  if (next.profile.level !== previous.profile.level) {
+    const expectedLevel = next.progress.placementArena >= 3 ? 'A2' : 'A1';
+    if (!verifiedPlacement || next.profile.level !== expectedLevel) return 'Уровень можно повысить только проверенным стартовым тестом.';
+  }
   if (previous.progress.freeRestoreUsed && !next.progress.freeRestoreUsed) return 'Бесплатное восстановление серии уже использовано.';
   if (!previous.progress.freeRestoreUsed && next.progress.freeRestoreUsed && !restores.length) return 'Бесплатное восстановление требует отдельного события.';
   if (restores.length && !allowRestore) return 'Восстановление серии выполняется только отдельным серверным запросом.';

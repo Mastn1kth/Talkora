@@ -33,6 +33,15 @@ export function verifyCourseEvent(previousState, event) {
   const allowed = activity.allowedExerciseSets.some(set => set.length === ids.length && set.every((id, index) => id === ids[index]));
   if (!allowed) return { verified: false, error: 'Набор заданий не совпадает с опубликованным уроком.' };
   const accuracy = Math.round(correct / ids.length * 100);
+  if (activity.mode === 'placement') {
+    const ratio = correct / ids.length;
+    const placementArena = ratio >= 0.85 ? 3 : ratio >= 0.65 ? 2 : ratio >= 0.4 ? 1 : 0;
+    const placementLevel = placementArena >= 3 ? 'A2' : 'A1';
+    if (proof.activityId !== 'placement' || event.title !== activity.title || event.accuracy !== accuracy || event.xp !== 0 || event.coins !== 0) {
+      return { verified: false, error: 'Результат стартового теста не совпадает с проверенными ответами.' };
+    }
+    return { verified: true, activityId: 'placement', placementArena, placementLevel };
+  }
   const passed = activity.mode !== 'gate' || correct / ids.length >= 0.75;
   const activityId = activity.mode === 'gate' && !passed ? `${proof.contentId}-practice` : proof.contentId;
   const baseXp = activity.mode === 'gate' ? (passed ? 50 : 10) : 30;

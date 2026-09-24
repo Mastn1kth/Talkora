@@ -173,6 +173,9 @@ export const arenas: Arena[] = [
       lesson('journeys', 'past', 'Вчера и сегодня', 'Познакомимся с фразами в прошедшем времени.', ['yesterday', 'visited', 'went'])] },
 ];
 
+export const placementExercises: Exercise[] = arenas.flatMap(arena => arena.lessons.slice(0, 2)
+  .flatMap(item => item.exercises.filter(exercise => exercise.type === 'choice').slice(0, 1)));
+
 const pastExercises: Exercise[] = [
   { id: 'past-rule', type: 'choice', prompt: 'Past Simple: законченное действие в прошлом. Выберите форму go для «вчера».', answer: 'went', options: ['goes', 'going', 'went', 'go'], hint: 'Go — неправильный глагол.', explanation: 'Go → went. В утвердительном предложении о прошлом используем went: I went home yesterday.' },
   { id: 'past-ed', type: 'input', prompt: 'Вставьте work в Past Simple: I ___ yesterday.', answer: 'worked', hint: 'Это правильный глагол: добавьте -ed.', explanation: 'Work → worked. I worked yesterday — Я работал вчера.' },

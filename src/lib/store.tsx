@@ -87,7 +87,7 @@ export function merge(snapshot:Snapshot,remote:AppState):AppState {
       dailyBonusDate:[local.progress.dailyBonusDate,remote.progress.dailyBonusDate].filter(Boolean).sort().at(-1)||null
     }};
 }
-type Store={state:AppState;user:User|null;loading:boolean;online:boolean;syncStatus:string;update:(fn:(s:AppState)=>AppState)=>void;authenticate:(mode:string,values:Record<string,string>)=>Promise<void>;logout:()=>Promise<void>;deleteAccount:(password:string)=>Promise<void>;sync:()=>Promise<void>;addWords:(words:{english:string,russian:string}[])=>void;completeLesson:(id:string,title:string,accuracy:number,xp:number,words?:PersonalWord[],proof?:LessonProof)=>void;bonus:()=>boolean;restoreStreak:()=>Promise<'free'|'paid'>};
+type Store={state:AppState;user:User|null;loading:boolean;online:boolean;syncStatus:string;update:(fn:(s:AppState)=>AppState)=>void;authenticate:(mode:string,values:Record<string,string>)=>Promise<void>;logout:()=>Promise<void>;deleteAccount:(password:string)=>Promise<void>;sync:()=>Promise<void>;addWords:(words:{english:string,russian:string}[])=>void;completeLesson:(id:string,title:string,accuracy:number,xp:number,words?:PersonalWord[],proof?:LessonProof)=>void;completePlacement:(accuracy:number,arena:number,level:string,proof:LessonProof)=>void;bonus:()=>boolean;restoreStreak:()=>Promise<'free'|'paid'>};
 const Context=createContext<Store>(null!);
 export const useStore=()=>useContext(Context);
 
@@ -208,6 +208,14 @@ export function StoreProvider({children}:{children:ReactNode}){
       return {...s,progress:{...s.progress,xp:s.progress.xp+earned,coins:s.progress.coins+5,streak,bestStreak:Math.max(s.progress.bestStreak??s.progress.streak,streak),lastStudyDate:today(),completedLessons:[...new Set([...s.progress.completedLessons,id])]},history:[...s.history,event],words:[...s.words,...words.filter(word=>!s.words.some(old=>old.english.toLowerCase()===word.english.toLowerCase()))]};
     });
   }
+  function completePlacement(accuracy:number,arena:number,level:string,proof:LessonProof){
+    update(s=>{
+      const placementArena=Math.max(s.progress.placementArena,arena);
+      const nextLevel=placementArena>=3?'A2':level;
+      const event:StudyEvent={id:crypto.randomUUID(),date:new Date().toISOString(),title:'Твоя отправная точка',xp:0,coins:0,accuracy,proof};
+      return {...s,profile:{...s.profile,level:nextLevel},progress:{...s.progress,placementArena},history:[...s.history,event]};
+    });
+  }
   function bonus(){
     if(stateRef.current.progress.dailyBonusDate===today())return false;
     update(s=>({...s,progress:{...s.progress,dailyBonusDate:today(),coins:s.progress.coins+10},history:[...s.history,{id:'bonus-'+today(),date:new Date().toISOString(),title:'Ежедневный подарок',xp:0,coins:10}]}));
@@ -232,5 +240,5 @@ export function StoreProvider({children}:{children:ReactNode}){
     if(changed)void sync();
     return result.cost===0?'free':'paid';
   }
-  return <Context.Provider value={{state,user,loading,online,syncStatus,update,authenticate,logout,deleteAccount,sync,addWords,completeLesson,bonus,restoreStreak}}>{children}</Context.Provider>;
+  return <Context.Provider value={{state,user,loading,online,syncStatus,update,authenticate,logout,deleteAccount,sync,addWords,completeLesson,completePlacement,bonus,restoreStreak}}>{children}</Context.Provider>;
 }

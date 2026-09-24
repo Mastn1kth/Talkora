@@ -33,6 +33,12 @@ export function exercisesForDuration(exercises: Exercise[], minutes: number): Ex
   return result;
 }
 
+/** The short seed test opens a course arena; it is not a CEFR certification. */
+export function placementArenaForScore(correct: number, total: number): number {
+  const ratio = total > 0 ? correct / total : 0;
+  return ratio >= 0.85 ? 3 : ratio >= 0.65 ? 2 : ratio >= 0.4 ? 1 : 0;
+}
+
 export interface ReviewState {
   correctStreak: number;
   lapses: number;

@@ -1,9 +1,9 @@
 import { writeFile } from 'node:fs/promises';
-import { arenas, getTopicTraining } from '../src/lib/content.ts';
+import { arenas, getTopicTraining, placementExercises } from '../src/lib/content.ts';
 import { exercisesForDuration } from '../src/lib/learning.ts';
 
 type ExportedActivity = {
-  mode: 'lesson' | 'gate';
+  mode: 'lesson' | 'gate' | 'placement';
   title: string;
   arenaId: string;
   answers: Record<string, string>;
@@ -26,6 +26,11 @@ for (const arena of arenas) {
     allowedExerciseSets: [gate.map(exercise => exercise.id)],
   };
 }
+activities.placement = {
+  mode: 'placement', title: 'Твоя отправная точка', arenaId: arenas[0].id,
+  answers: Object.fromEntries(placementExercises.map(exercise => [exercise.id, exercise.answer])),
+  allowedExerciseSets: [placementExercises.map(exercise => exercise.id)],
+};
 
 const topicQueries = {
   airport: 'Английский в аэропорту', hotel: 'Разговор в отеле', interview: 'Собеседование на работу',

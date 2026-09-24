@@ -3,12 +3,12 @@ import { X, ArrowRight, Lightbulb, Flag, Check, Volume2, RotateCcw, Trophy, Spar
 import { Logo, Modal, speak } from '../components';
 import { useStore, today } from '../lib/store';
 import { arenas, dictionary } from '../lib/content';
-import { exercisesForDuration, isCorrect } from '../lib/learning';
+import { exercisesForDuration, isCorrect, placementArenaForScore } from '../lib/learning';
 import type { LessonSession } from '../App';
 import type { Exercise } from '../lib/content';
 import { SupportForm } from './Screens';
 export function LessonPlayer({session,duration,onClose,notify}:{session:LessonSession;duration:number;onClose:()=>void;notify:(message:string)=>void}){
- const {state,update,completeLesson}=useStore();const questions=useMemo(()=>session.mode==='placement'||session.mode==='gate'?session.exercises:exercisesForDuration(session.exercises,duration),[session,duration]);
+ const {state,update,completeLesson,completePlacement}=useStore();const questions=useMemo(()=>session.mode==='placement'||session.mode==='gate'?session.exercises:exercisesForDuration(session.exercises,duration),[session,duration]);
  const [index,setIndex]=useState(0);const [answer,setAnswer]=useState('');const [tiles,setTiles]=useState<number[]>([]);const [attempt,setAttempt]=useState(0);const [feedback,setFeedback]=useState<'correct'|'retry'|'explain'|null>(null);const [score,setScore]=useState(0);const [finished,setFinished]=useState(false);const [hint,setHint]=useState(false);const [report,setReport]=useState(false);const [exit,setExit]=useState(false);const [mistakes,setMistakes]=useState<Exercise[]>([]);const [reviewRound,setReviewRound]=useState(false);const [weak,setWeak]=useState<Exercise[]>([]);const [earnedXp,setEarnedXp]=useState(0);const finalized=useRef(false);const firstAnswers=useRef<Record<string,string>>({});const exercises=reviewRound?weak:questions;const ex=exercises[index];const accuracy=exercises.length?Math.round(score/exercises.length*100):0;const isGate=session.mode==='gate';const isPlacement=session.mode==='placement';const passed=exercises.length>0&&score/exercises.length>=.75;
  function check(){const value=ex.type==='build'?tiles.map(i=>ex.options![i]).join(' '):answer;if(!value.trim())return;if(attempt===0)firstAnswers.current[ex.id]=value;const correct=isCorrect(value,ex.answer);if(correct){if(attempt===0)setScore(s=>s+1);setFeedback('correct');}else{if(attempt===0)setMistakes(m=>[...m,ex]);setAttempt(a=>a+1);setFeedback(attempt===0?'retry':'explain');const word=dictionary.find(w=>w.english.toLowerCase()===(ex.word||ex.answer).toLowerCase());update(s=>{const existing=s.words.find(w=>w.english.toLowerCase()===(ex.word||ex.answer).toLowerCase());if(existing)return {...s,words:s.words.map(w=>w.id===existing.id?{...w,known:false,mistakes:(w.mistakes||0)+1,nextReview:today(),interval:0}:w)};return word?{...s,words:[...s.words,{id:crypto.randomUUID(),english:word.english,russian:word.russian,mistakes:1,known:false,nextReview:today(),interval:0}]}:s;});}}
  function next(){
@@ -18,8 +18,9 @@ export function LessonPlayer({session,duration,onClose,notify}:{session:LessonSe
       const ratio=score/exercises.length;
       if(reviewRound){setEarnedXp(0);}
       else if(isPlacement){
-        const place=ratio>=.85?2:ratio>=.55?1:0;
-        update(s=>({...s,profile:{...s.profile,level:arenas[Math.max(s.progress.placementArena,place)].level},progress:{...s.progress,placementArena:Math.max(s.progress.placementArena,place)}}));
+        const place=placementArenaForScore(score,exercises.length);
+        const responses=exercises.map(item=>({exerciseId:item.id,answer:firstAnswers.current[item.id]||''}));
+        completePlacement(Math.round(ratio*100),place,arenas[place].level,{contentId:'placement',activityId:'placement',responses});
       }else{
         const entryId=isGate&&ratio<.75?session.id+'-practice':session.id;
         const points=isGate?(ratio>=.75?50:10):30;
